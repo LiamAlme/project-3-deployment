@@ -1,7 +1,14 @@
 import React from "react";
+import { useState } from "react";
 import "./ManagerScreen.css";
+import EmployeeScreen from "./EmployeeScreen";
 
 function ManagerScreen() {
+  const [showEmployeeScreen, setShowEmployeeScreen] = useState(false);
+  if (showEmployeeScreen) {
+    return <EmployeeScreen onBack={() => setShowEmployeeScreen(false)} />;
+  }
+
   return (
     <div className="manager-container">
       <h1 className="manager-title">Manager Dashboard</h1>
@@ -15,7 +22,7 @@ function ManagerScreen() {
           Manage Inventory
         </button>
 
-        <button className="manager-btn" onClick={() => console.log("Manage Employees Clicked")}>
+        <button className="manager-btn" onClick={() => setShowEmployeeScreen(true)}>
           Manage Employees
         </button>
 

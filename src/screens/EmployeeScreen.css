@@ -1,0 +1,48 @@
+.employee-container {
+  width: 80%;
+  margin: 40px auto;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+}
+
+.employee-table tr:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.employee-table .selected {
+  background-color: #b3d4fc;
+}
+
+.btn-row {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+button {
+  padding: 8px 14px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
