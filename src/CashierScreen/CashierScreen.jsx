@@ -1,9 +1,22 @@
-import React, { useActionState, useState } from 'react';
+import React, { useActionState, useEffect, useState } from 'react';
 import './CashierScreen.css';
 
 function CashierScreen() {
+    const [products, setProducts] = useState([]);
     const [items, setItems] = useState([]);
     const [orderTotal, setOrderTotal] = useState(0);
+
+    useEffect(()=>{ 
+        fetch("http://127.0.0.1:5000/api/fetchProducts")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        return response.json();
+        })
+        .then(data => setProducts(data))
+        .catch(error => console.error('Error fetching products:', error));
+    },[]);
 
     const addItem = (name, price) => {
         const newItem = {
@@ -12,7 +25,6 @@ function CashierScreen() {
         };
 
         setOrderTotal(orderTotal+price);
-
         setItems([...items, newItem]);
     };
 
@@ -29,6 +41,12 @@ function CashierScreen() {
     return (
     <div className="container">
         <div className="order">
+            <ul>
+            {products.map(p => (
+                <li key={p.product_id}>
+                {p.product_name} — ${p.unit_price}
+                </li>
+            ))}</ul>
             <button onClick={() => addItem("Tea", 20)} className='orderButton'>Test</button>
         </div>
         <div className="checkout">
