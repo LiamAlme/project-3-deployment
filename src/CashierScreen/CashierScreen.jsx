@@ -30,12 +30,12 @@ function CashierScreen() {
             price,
         };
 
-        setOrderTotal(orderTotal+price);
+        setOrderTotal((Number(orderTotal)+Number(price)).toFixed(2));
         setItems([...items, newItem]);
 
         setOrderData(prev => ({
             ...prev,
-            total_amount: prev.total_amount + price,
+            total_amount: (Number(prev.total_amount) + Number(price)).toFixed(2),
             items: [...prev.items, {
                 product_id: id,
                 quantity: 1,
@@ -55,53 +55,63 @@ function CashierScreen() {
     const checkout = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await fetch("http://127.0.0.1:5000/api/postOrder", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json"
-                },
-                body: JSON.stringify(orderData)
-            });
+        if(orderData.total_amount > 0){
+            try {
+                const response = await fetch("http://127.0.0.1:5000/api/postOrder", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(orderData)
+                });
 
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+
+                setItems([]);
+                setOrderTotal(0);
+                setOrderData({
+                    total_amount: 0,
+                    employee_id: 4,
+                    items: []
+                });
+            } 
+
+            catch (error) {
+                console.error("Error posting order:", error);
             }
-
-            setItems([]);
-            setOrderTotal(0);
-        } 
-
-        catch (error) {
-            console.error("Error posting order:", error);
         }
     };
 
     return (
     <div className="container">
         <div className="order">
-            <ul>
+            <ul className='orderButtons'>
             {products.map(p => (
                 <button onClick={() => addItem(p.product_name, parseFloat(p.unit_price), p.product_id)} key={p.product_id} className='orderButton'>
-                {p.product_name} — ${p.unit_price}
+                {p.product_name}
                 </button>
             ))}</ul>
-            <button onClick={() => addItem("Tea", 20)} className='orderButton'>Test</button>
         </div>
         <div className="checkout">
+        
+        <div className='checkoutContainer'>
+            <ul className="orderItems">
+                {items.map((item) => (
+                <li key={item.id} className="orderItem">
+                    <span className="itemName">{item.name}</span>
+                    <span className="itemPrice"> ${item.price}</span>
+                </li>
+                ))}
+            </ul>
+        </div>
 
-        <ul className="orderItems">
-            {items.map((item) => (
-            <li key={item.id} className="orderItem">
-                <span className="itemName">{item.name}</span>
-                <span className="itemPrice"> ${item.price}</span>
-            </li>
-            ))}
-        </ul>
-
-        <p>${orderTotal}</p>
-        <button onClick={clear} className='orderButton'>Cancel</button>
-        <button onClick={checkout} className='orderButton'>Checkout</button>
+        <div>
+            <p>${orderTotal}</p>
+            <button onClick={clear} className='orderButton'>Cancel</button>
+            <button onClick={checkout} className='orderButton'>Checkout</button>
+        </div>
         </div >
     </div>
 );}

@@ -195,9 +195,15 @@ def post_order():
 
         session.commit()
 
+        return jsonify({
+            "message": "Order posted successfully",
+            "order_id": new_order.order_id
+        }), 201
+
     except SQLAlchemyError as e:
         session.rollback()
         print("Error Adding Order", e)
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

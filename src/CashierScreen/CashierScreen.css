@@ -6,7 +6,7 @@
 
 .order {
   flex: 2;
-  background-color: #4a90e2;
+  background-color: #777777;
   color: white;
   display: flex;
   flex-wrap: wrap;
@@ -16,7 +16,7 @@
 
 .checkout {
   flex: 1;
-  background-color: #f5a623;
+  background-color: #707070;
   color: white;
   display: flex;
   flex-direction: column;
@@ -34,22 +34,20 @@
   color: rgba(0, 0, 0, 0.85);
   cursor: pointer;
   display: inline-flex;
+  vertical-align: middle;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 16px;
   font-weight: 600;
   justify-content: center;
   line-height: 1.25;
   margin: 0;
-  min-height: 3rem;
-  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
-  position: relative;
-  text-decoration: none;
+  min-height: 12rem;
+  max-height: 12rem;
+  min-width: 12rem;
+  max-width: 12rem;
+  padding: 10px 10px;
   transition: all 250ms;
-  user-select: none;
-  -webkit-user-select: none;
   touch-action: manipulation;
-  vertical-align: baseline;
-  width: auto;
 }
 
 .orderButton:hover,
@@ -72,19 +70,37 @@
 }
 
 .orderItems {
+  display: flex;
+  flex-direction: column;
   list-style: none;
   padding: 0;
 }
 
 .orderItem {
   display: flex;
+  flex: 1;
   justify-content: space-between;
   align-items: center;
   margin: 8px 0;
-  background: #f8f8f8;
+  background: #f2f2f2;
   color: #000000;
   padding: 8px 12px;
-  border-radius: 6px;
+  width: fill;
+}
+
+.itemName {
+    justify-content: left;
+}
+
+.itemPrice {
+    justify-content: right;
+}
+
+.checkoutContainer{
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    width: fill;
 }
 
 h1, p {
