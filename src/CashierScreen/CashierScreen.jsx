@@ -58,7 +58,7 @@ function CashierScreen() {
 
         if(orderData.total_amount > 0){
             try {
-                const response = await fetch(`{API_BASE}/api/postOrder`, {
+                const response = await fetch(`${API_BASE}/api/postOrder`, {
                     method: "POST",
                     headers: {
                     "Content-Type": "application/json"
