@@ -2,6 +2,7 @@ import React, { useActionState, useEffect, useState } from 'react';
 import './CashierScreen.css';
 
 function CashierScreen() {
+    const API_BASE = process.env.REACT_APP_BACKEND_URL;
     const [products, setProducts] = useState([]);
     const [items, setItems] = useState([]);
     const [orderTotal, setOrderTotal] = useState(0);
@@ -13,7 +14,7 @@ function CashierScreen() {
     });
 
     useEffect(()=>{ 
-        fetch("http://127.0.0.1:5000/api/fetchProducts")
+        fetch(`${API_BASE}/api/fetchProducts`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -57,7 +58,7 @@ function CashierScreen() {
 
         if(orderData.total_amount > 0){
             try {
-                const response = await fetch("http://127.0.0.1:5000/api/postOrder", {
+                const response = await fetch(`{API_BASE}/api/postOrder`, {
                     method: "POST",
                     headers: {
                     "Content-Type": "application/json"
